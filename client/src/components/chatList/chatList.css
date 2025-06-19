@@ -61,3 +61,18 @@
     }
   }
 }
+
+@media screen and (max-width: 600px) {
+  .chatList {
+    width: 100%;
+    font-size: 12px;
+  }
+  .chatList .list a {
+    padding: 8px;
+    font-size: 12px;
+  }
+  .chatList .upgrade img {
+    width: 18px;
+    height: 18px;
+  }
+}

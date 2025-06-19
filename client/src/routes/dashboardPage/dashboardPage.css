@@ -102,3 +102,30 @@
     }
   }
 }
+
+@media screen and (max-width: 600px) {
+  .dashboardPage .texts {
+    width: 100%;
+    gap: 20px;
+  }
+  .dashboardPage .texts .logo h1 {
+    font-size: 32px;
+  }
+  .dashboardPage .texts .logo img {
+    width: 32px;
+    height: 32px;
+  }
+  .dashboardPage .formContainer {
+    width: 100%;
+    border-radius: 10px;
+    padding: 0 5px;
+  }
+  .dashboardPage .formContainer form input {
+    padding: 10px;
+    font-size: 14px;
+  }
+  .dashboardPage .formContainer form button {
+    margin-right: 5px;
+    padding: 5px;
+  }
+}

@@ -13,3 +13,14 @@
     background-color: #12101b;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .dashboardLayout {
+    flex-direction: column;
+    gap: 0;
+    padding-top: 5px;
+  }
+  .dashboardLayout .menu, .dashboardLayout .content {
+    width: 100%;
+  }
+}
