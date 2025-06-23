@@ -9,6 +9,8 @@ import Chat from "./models/chat.js";
 import UserChats from "./models/userChats.js";
 import User from "./models/user.js";
 import { auth } from "./middleware/auth.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 const port = process.env.PORT || 3001;
 const app = express();
@@ -186,6 +188,25 @@ app.put("/api/chats/:id", auth, async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).send("Error adding conversation!");
+  }
+});
+
+app.delete("/api/chats/:id", auth, async (req, res) => {
+  const userId = req.user._id;
+  const chatId = req.params.id;
+
+  try {
+    // Remove the chat from the Chat collection
+    await Chat.deleteOne({ _id: chatId, userId });
+    // Remove the chat reference from the UserChats collection
+    await UserChats.updateOne(
+      { userId },
+      { $pull: { chats: { _id: chatId } } }
+    );
+    res.status(200).send({ message: "Chat deleted successfully" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error deleting chat!");
   }
 });
 

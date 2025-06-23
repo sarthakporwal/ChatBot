@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import "./chatList.css";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../../context/AuthContext";
 
 const ChatList = () => {
   const { getToken } = useAuth();
+  const queryClient = useQueryClient();
 
   const { isPending, error, data } = useQuery({
     queryKey: ["userChats"],
@@ -18,6 +19,27 @@ const ChatList = () => {
       }).then((res) => res.json());
     },
   });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (chatId) => {
+      const token = getToken();
+      return fetch(`${import.meta.env.VITE_API_URL}/api/chats/${chatId}`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["userChats"]);
+    },
+  });
+
+  const handleDelete = (e, chatId) => {
+    e.preventDefault();
+    deleteMutation.mutate(chatId);
+  };
 
   return (
     <div className="chatList">
@@ -33,9 +55,19 @@ const ChatList = () => {
           : error
           ? "Something went wrong!"
           : data?.map((chat) => (
-              <Link to={`/dashboard/chats/${chat._id}`} key={chat._id}>
-                {chat.title}
-              </Link>
+              <div key={chat._id} style={{ display: "flex", alignItems: "center" }}>
+                <Link to={`/dashboard/chats/${chat._id}`} style={{ flex: 1 }}>
+                  {chat.title}
+                </Link>
+                <button
+                  className="delete-chat-btn"
+                  onClick={(e) => handleDelete(e, chat._id)}
+                  title="Delete chat"
+                  style={{ marginLeft: 8 }}
+                >
+                  &#10005;
+                </button>
+              </div>
             ))}
       </div>
       <hr />
