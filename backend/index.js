@@ -196,9 +196,7 @@ app.delete("/api/chats/:id", auth, async (req, res) => {
   const chatId = req.params.id;
 
   try {
-    // Remove the chat from the Chat collection
     await Chat.deleteOne({ _id: chatId, userId });
-    // Remove the chat reference from the UserChats collection
     await UserChats.updateOne(
       { userId },
       { $pull: { chats: { _id: chatId } } }
