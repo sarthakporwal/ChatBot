@@ -273,63 +273,43 @@
 
 @media screen and (max-width: 768px) {
   .homepage {
-    padding: 15px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 15px 0;
   }
-  
-  .left h1 {
-    font-size: 3rem;
-    letter-spacing: -2px;
+  .left {
+    max-width: 100%;
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
   }
-  
-  .left h2 {
-    font-size: 1.2rem;
-  }
-  
-  .left a {
-    padding: 16px 32px;
-    font-size: 1.1rem;
-  }
-  
   .terms {
-    position: static;
+    width: 100%;
+    max-width: 100%;
+    align-items: center;
     margin-top: 40px;
+    padding: 0 10px;
+    box-sizing: border-box;
   }
-  
-  .links {
-    font-size: 0.85rem;
-    gap: 15px;
+  .terms img {
+    max-width: 40px;
+    width: 100%;
+    height: auto;
   }
 }
 
 @media screen and (max-width: 480px) {
   .homepage {
-    padding: 10px;
+    padding: 5px 0;
   }
-  
-  .left h1 {
-    font-size: 2.5rem;
+  .left {
+    padding: 0 5px;
   }
-  
-  .left h2 {
-    font-size: 1.1rem;
-  }
-  
-  .left a {
-    padding: 14px 28px;
-    font-size: 1rem;
-  }
-  
   .terms {
-    gap: 15px;
+    padding: 0 5px;
   }
-  
-  .links {
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-  }
-  
-  .links span {
-    display: none;
+  .terms img {
+    max-width: 32px;
   }
 }
