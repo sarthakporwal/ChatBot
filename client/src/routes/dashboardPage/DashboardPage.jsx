@@ -43,12 +43,15 @@ const DashboardPage = () => {
           <img src="/logo.png" alt="" />
           <h1>CHATBOT</h1>
         </div>
+        <div className="subtitle">
+          Ask anything, get instant answers. Your AI assistant is here to help!
+        </div>
       </div>
       <div className="formContainer">
         <form onSubmit={handleSubmit}>
-          <input type="text" name="text" placeholder="Ask me anything..." />
-          <button>
-            <img src="/arrow.png" alt="" />
+          <input type="text" name="text" placeholder="Ask me anything..." autoComplete="off" />
+          <button type="submit">
+            <img src="/arrow.png" alt="Send" />
           </button>
         </form>
       </div>

@@ -96,6 +96,13 @@ import Markdown from "react-markdown";
 import { IKImage } from "imagekitio-react";
 import { useAuth } from "../../context/AuthContext";
 import { useEffect, useRef } from "react"; // Import useEffect and useRef
+import userAvatar from '/human1.jpg';
+import botAvatar from '/bot.png';
+
+const formatTime = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+};
 
 const ChatPage = () => {
   const path = useLocation().pathname;
@@ -147,25 +154,24 @@ const ChatPage = () => {
               key={i}
               className={`message-container ${message.role === "user" ? "user-message-container" : "bot-message-container"}`}
             >
-              {message.img && (
-                <IKImage
-                  urlEndpoint={import.meta.env.VITE_IMAGE_KIT_ENDPOINT}
-                  path={message.img}
-                  height="300"
-                  width="400"
-                  transformation={[{ height: 300, width: 400 }]}
-                  loading="lazy"
-                  lqip={{ active: true, quality: 20 }}
+              <div className="message-row">
+                <img
+                  className="avatar"
+                  src={message.role === 'user' ? userAvatar : botAvatar}
+                  alt={message.role === 'user' ? 'User' : 'Bot'}
                 />
-              )}
-              <div
-                className={`message ${message.role === "user" ? "user" : "bot"}`}
-              >
-                <Markdown>{message.parts[0].text}</Markdown>
+                <div
+                  className={`message fade-in ${message.role === "user" ? "user" : "bot"}`}
+                >
+                  <Markdown>{message.parts[0].text}</Markdown>
+                </div>
+              </div>
+              <div className="timestamp">
+                {message.createdAt ? formatTime(message.createdAt) : ''}
               </div>
             </div>
           ))}
-          <div ref={chatEndRef} /> {/* Element to scroll into view */}
+          <div ref={chatEndRef} />
         </div>
       </div>
       <NewPrompt data={data} />

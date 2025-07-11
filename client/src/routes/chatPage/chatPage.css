@@ -142,6 +142,36 @@
   box-shadow: var(--shadow-light);
 }
 
+.message-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  background: #232232;
+}
+
+.timestamp {
+  font-size: 0.78rem;
+  color: #b0b0b0;
+  margin: 2px 0 0 48px;
+  user-select: none;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 /* Media Queries for Responsiveness */
 @media screen and (max-width: 900px) {

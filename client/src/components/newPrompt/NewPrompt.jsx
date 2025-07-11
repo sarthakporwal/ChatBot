@@ -10,6 +10,12 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_PUBLIC_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
+const LoadingDots = () => (
+  <div className="loading-dots">
+    <span>.</span><span>.</span><span>.</span>
+  </div>
+);
+
 const NewPrompt = ({ data }) => {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
@@ -19,10 +25,13 @@ const NewPrompt = ({ data }) => {
     dbData: {},
     aiData: {},
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const queryClient = useQueryClient();
   const { getToken } = useAuth();
   const endRef = useRef(null);
   const formRef = useRef(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -69,29 +78,35 @@ const NewPrompt = ({ data }) => {
         dbData: {},
         aiData: {},
       });
+      setIsLoading(false);
+      setErrorMsg("");
     },
     onError: (err) => {
+      setIsLoading(false);
+      setErrorMsg("Failed to save message. Please try again.");
       console.log(err);
     },
   });
 
   const add = async (text, isInitial) => {
     if (!isInitial) setQuestion(text);
-
+    setIsLoading(true);
+    setErrorMsg("");
     try {
       const result = await chat.sendMessageStream(text);
       let accumulatedText = "";
       for await (const chunk of result.stream) {
         const chunkText = chunk.text();
-        console.log(chunkText);
         accumulatedText += chunkText;
         setAnswer(accumulatedText);
       }
-
+      setIsLoading(false);
       mutation.mutate();
     } catch (err) {
+      setIsLoading(false);
+      setAnswer("");
+      setErrorMsg("Sorry, I encountered an error. Please try again.");
       console.log(err);
-      setAnswer("Sorry, I encountered an error. Please try again.");
     }
   };
 
@@ -99,8 +114,15 @@ const NewPrompt = ({ data }) => {
     e.preventDefault();
     const text = e.target.text.value;
     if (!text) return;
-
     add(text, false);
+  };
+
+  // Handle Enter/Shift+Enter
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (!isLoading) formRef.current.requestSubmit();
+    }
   };
 
   // IN PRODUCTION WE DON'T NEED IT
@@ -131,18 +153,28 @@ const NewPrompt = ({ data }) => {
           transformation={[{ width: 380 }]}
         />
       )}
-      {question && <div className="message user">{question}</div>}
-      {answer && (
-        <div className="message">
+      {question && <div className="message user fade-in">{question}</div>}
+      {isLoading && <LoadingDots />}
+      {answer && !errorMsg && (
+        <div className="message fade-in">
           <Markdown>{answer}</Markdown>
         </div>
       )}
+      {errorMsg && <div className="error-message fade-in">{errorMsg}</div>}
       <div className="endChat" ref={endRef}></div>
       <form className="newForm" onSubmit={handleSubmit} ref={formRef}>
         <Upload setImg={setImg} />
         <input id="file" type="file" multiple={false} hidden />
-        <input type="text" name="text" placeholder="Ask anything..." />
-        <button>
+        <input
+          type="text"
+          name="text"
+          placeholder="Ask anything..."
+          ref={inputRef}
+          onKeyDown={handleKeyDown}
+          disabled={isLoading}
+          autoComplete="off"
+        />
+        <button type="submit" disabled={isLoading}>
           <img src="/arrow.png" alt="" />
         </button>
       </form>
