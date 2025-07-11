@@ -66,7 +66,14 @@ const SignInPage = () => {
             />
           </div>
           <button type="submit" disabled={isLoading}>
-            {isLoading ? "Signing in..." : "Sign In"}
+            {isLoading ? (
+              <>
+                <span className="loading-spinner"></span>
+                Signing in...
+              </>
+            ) : (
+              "Sign In"
+            )}
           </button>
         </form>
         <p>
