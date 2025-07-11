@@ -69,9 +69,14 @@
   background-clip: text;
 }
 
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
 .form-group {
-  margin-bottom: 1.5rem;
-  position: relative;
+  width: 100%;
+  display: block;
 }
 
 .form-group label {
