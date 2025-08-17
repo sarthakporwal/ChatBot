@@ -122,6 +122,5 @@ We 💙 open source! Found a bug? Have a feature idea? PRs and issues are welcom
 
 ## 👋 Connect
 
-**Sarthak Porwal**  
-[Your LinkedIn/GitHub Profile Link]  
+**Sarthak Porwal**   
 [Project Repo](https://github.com/sarthakporwal/chatbot)
