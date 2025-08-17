@@ -2,10 +2,6 @@
 
 > **Your AI-Powered Conversational Sidekick**
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-green?style=for-the-badge&logo=vercel)](https://chitichat.netlify.app/)
-[![MIT License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
-
----
 
 Welcome to **ChitiChat** — the next-generation chatbot that brings your conversations to life! Powered by Google Gemini AI, ChitiChat is more than just a chatbot: it's your creative partner, productivity booster, and always-on assistant. Whether you're brainstorming, learning, or just having fun, ChitiChat is here to help — anytime, anywhere.
 
@@ -25,7 +21,6 @@ Welcome to **ChitiChat** — the next-generation chatbot that brings your conver
 
 ## 🖼️ Screenshots
 
-> _Add your app screenshots here for maximum wow!_
 
 - **Landing Page:** Eye-catching, modern welcome
 - **Sign Up / Sign In:** Secure, stylish forms
@@ -122,12 +117,6 @@ We 💙 open source! Found a bug? Have a feature idea? PRs and issues are welcom
 3. Commit (`git commit -m 'feat: add amazing feature'`)
 4. Push (`git push origin feature/your-feature`)
 5. Open a Pull Request
-
----
-
-## 📄 License
-
-MIT — see [`LICENSE`](LICENSE) for details.
 
 ---
 
